@@ -6,12 +6,12 @@
 
 # Installer options
 param (
-    [switch]$clean = $false,        # Will delete old drivers and install the new ones
+    [switch]$clean = $true,        # Will delete old drivers and install the new ones
     [string]$folder = "$env:temp"   # Downloads and extracts the driver here
 )
 
 
-$scheduleTask = $false  # Creates a Scheduled Task to run to check for driver updates
+$scheduleTask = $true  # Creates a Scheduled Task to run to check for driver updates
 $scheduleDay = "Sunday" # When should the scheduled task run (Default = Sunday)
 $scheduleTime = "12pm"  # The time the scheduled task should run (Default = 12pm)
 
@@ -48,7 +48,7 @@ if (Test-Path $env:programfiles\7-zip\7z.exe) {
 # Checking currently installed driver version
 Write-Host "Attempting to detect currently installed driver version..."
 try {
-    $ins_version = (Get-WmiObject Win32_PnPSignedDriver | Where-Object {$_.devicename -like "*nvidia*" -and $_.devicename -notlike "*audio*"}).DriverVersion.SubString(7).Remove(1, 1).Insert(3, ".")
+    $ins_version = (Get-WmiObject Win32_PnPSignedDriver | Where-Object {$_.devicename -like "*nvidia*" -and $_.devicename -notlike "*audio*" -and $_.devicename -notlike "*Type-C Port*"}).DriverVersion.SubString(7).Remove(1, 1).Insert(3, ".")
 } catch {
     Write-Host "Unable to detect a compatible Nvidia device."
     Write-Host "Press any key to exit..."

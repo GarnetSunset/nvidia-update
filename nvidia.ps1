@@ -114,7 +114,7 @@ if ($?) {
 
 # Extracting setup files
 $extractFolder = "$nvidiaTempFolder\$version"
-$filesToExtract = "Display.Driver HDAudio NVI2 PhysX EULA.txt ListDevices.txt setup.cfg setup.exe"
+$filesToExtract = "Display.Driver HDAudio NVI2 PhysX PPC EULA.txt ListDevices.txt setup.cfg setup.exe"
 Write-Host "Download finished, extracting the files now..."
 if ($archiverProgram -eq "$env:programfiles\7-zip\7z.exe") {
     Start-Process -FilePath $archiverProgram -ArgumentList "x $dlFile $filesToExtract -o""$extractFolder""" -wait
